@@ -1,0 +1,20 @@
+body{
+    font-family: Georgia, serif;
+    background: #EEEEEE;
+}
+header{
+    margin: auto;
+    text-align: center;
+}
+main{
+    background-color: #DDDDDD;
+    margin: auto;   /* centralizar o conteúdo */
+    width: 800px; /* trocar depois */
+}
+.insertProductsNames {
+    display: flex;
+    justify-content: center;
+}
+.totalPriceProducts{
+    text-align: center;
+}
