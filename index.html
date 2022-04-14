@@ -9,27 +9,106 @@
     <title>Projeto Avaliativo 1</title>
   </head>
   <body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
     <header>
       <h1>DEVinHouse</h1>
       <h2>Módulo 1 - Projeto Avaliativo 1</h2>
     </header>
     <main>
       <div class="insertProductsNames">
-        <label for="productName">Inserir item na lista:</label>
-        <input type="text" name="Nome do produto" id="productName" autofocus />
-        <button type="button" name="btnAdcionar">Inserir</button>
+        <label for="productName">Inserir item na lista: </label>
+        <input
+          type="text"
+          id="productName"
+          placeholder="ex: Brócolis"
+          autofocus
+        />
+        <button id="btnAdd" class="btn btn-primary">Inserir</button>
       </div>
 
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-        ipsa tempora eligendi nihil qui quaerat ex placeat, quisquam temporibus
-        eveniet, quia praesentium vitae numquam explicabo necessitatibus
-        debitis! Labore, assumenda adipisci!
-      </p>
+      <p id="test"></p>
+
+      <div class="shoppingCartList">
+        <ul id="listOfProducts"></ul>
+      </div>
+
       <div class="totalPriceProducts">
         <p>Total das compras:</p>
         <p id="finalPrice"></p>
       </div>
     </main>
+
+    <!-- Button trigger modal -->
+    <button
+      id="openModal"
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+      hidden
+    >
+      Launch static backdrop modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productModalName">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="productIntances">
+              <label for="productPrice">Insira o valor da unidade: </label>
+              <input
+                type="text"
+                id="productPrice"
+                placeholder="ex: 20"
+                autofocus
+              />
+              <label for="productQuantity"
+                >Insira a quantidade desejada:
+              </label>
+              <input type="text" id="productQuantity" placeholder="ex: 20" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button type="button" class="btn btn-primary">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="index.js"></script>
   </body>
 </html>
