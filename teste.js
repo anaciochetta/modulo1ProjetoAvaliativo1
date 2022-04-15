@@ -91,3 +91,9 @@ export function createModalProduct() {
   </div>
 </div>`;
 }
+
+
+
+
+
+//checkbox.addEventListener("click", verifyCheckbox);

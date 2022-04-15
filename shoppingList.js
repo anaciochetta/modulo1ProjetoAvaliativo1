@@ -24,7 +24,26 @@ export function calculateTotalPrice() {
   shoppingList.forEach((item) => {
     finalPriceList = item.price * item.quantity;
   });
-  return finalPriceList;
+  document.getElementById("finalPrice").innerHTML = "R$" + finalPriceList;
 }
 
 //adciona valor e quantidade aos produtos
+export function btnAddQuantityAndPrice() {
+  let inputPrice = document.getElementById("productPrice"); //pega o preço do produto do input
+  let inputQuantity = document.getElementById("productQuantity"); //pega a quantidade do produto do input
+  const id = parseInt(document.getElementById("modalProductId").value);
+  addQuantityAndPrice(id, inputPrice.value, inputQuantity.value);
+  if (!inputPrice.value) {
+    return window.alert("Insira o valor do produto desejado!");
+  }
+  if (!inputQuantity.value) {
+    return window.alert("Insira a quantidade do produto desejado!");
+  }
+  inputPrice.value = "";
+  inputQuantity.value = "";
+}
+function addQuantityAndPrice(id, price, quantity) {
+  let produto = checkProductId(id);
+  produto.addProductPrice(price);
+  produto.addProductQuantity(quantity);
+}

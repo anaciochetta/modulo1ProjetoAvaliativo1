@@ -2,6 +2,7 @@ import {
   addProductToShoppingList,
   checkProductId,
   calculateTotalPrice,
+  //verifyCheckbox,
 } from "./shoppingList.js";
 import { shoppingList } from "./index.js";
 
@@ -15,7 +16,7 @@ export class Product {
   constructor({ id, name, quantity, price }) {
     this.id = id;
     this.name = name;
-    this.name = quantity;
+    this.quantity = quantity;
     this.price = price;
   }
 
@@ -38,10 +39,10 @@ export function btnAddProduct() {
     return window.alert("Insira um valor!");
   }
   let id = createObjectProduct();
-  createCheckboxProduct(inputProduct.value);
+  createCheckboxProduct(inputProduct.value, id);
   addInstanceToProducts(id, inputProduct.value);
+  manageModalName(inputProduct.value);
   inputProduct.value = "";
-  manageModal(inputProduct.value);
 }
 
 //cria um novo objeto referente ao produto inserido no input
@@ -55,7 +56,6 @@ export function createObjectProduct() {
 //função para colocar o nome no produto novo
 export function addInstanceToProducts(id, name) {
   let produto = checkProductId(id);
-  console.log(produto);
   produto.addProductName(name);
 }
 
@@ -77,9 +77,10 @@ export function createCheckboxProduct(produto, id) {
 
   let checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.id = produto;
+  checkbox.id = id;
   checkbox.name = produto;
   checkbox.checked = false;
+  checkbox.addEventListener("click", isChecked);
 
   let label = document.createElement("label");
   label.htmlFor = produto;
@@ -88,31 +89,32 @@ export function createCheckboxProduct(produto, id) {
 
   let br = document.createElement("br");
 
+  let remove = document.createElement("input");
+  remove.type = "button";
+  remove.id = id;
+  remove.name = produto;
+  remove.innerHTML = "remove";
+
   ul.appendChild(li);
   li.appendChild(checkbox);
   li.appendChild(label);
   li.appendChild(br);
+  li.appendChild(remove);
 }
 
 //função para aparecer o modal
-export function showModalProduct() {
+export function showModalProduct(e) {
+  const label = e.target;
+  const li = label.parentElement;
+  const id = li.id;
+  document.getElementById("modalProductId").value = id;
   document.getElementById("openModal").click();
 }
 
 //função para gerenciar o modal
-export function manageModal(productName) {
-  let name = document.getElementById("productModalName").value;
-  name = productName;
-  console.log(productName);
-  console.log(name);
+export function manageModalName(name) {
+  document.getElementById("productModalName").innerHTML = name;
 }
 
-//função para ver se está check na lista
-export function verifyCheckbox(id) {
-  let checkbox = document.getElementById(id);
-  if (checkbox.checked) {
-    console.log("ok");
-  } else {
-    console.log("não ok");
-  }
-}
+//função para verificar o checkbox
+export function isChecked() {}

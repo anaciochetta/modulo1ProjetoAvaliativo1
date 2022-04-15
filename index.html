@@ -73,7 +73,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="productModalName">Modal title</h5>
+            <h5 class="modal-title" id="productModalName"></h5>
             <button
               type="button"
               class="btn-close"
@@ -82,6 +82,8 @@
             ></button>
           </div>
           <div class="modal-body">
+            <input type="text" hidden id="modalProductId" />
+
             <div id="productIntances">
               <label for="productPrice">Insira o valor da unidade: </label>
               <input
@@ -104,7 +106,9 @@
             >
               Fechar
             </button>
-            <button type="button" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-primary" id="btnSave">
+              Salvar
+            </button>
           </div>
         </div>
       </div>
