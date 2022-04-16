@@ -15,23 +15,32 @@ export function addProductToShoppingList(item) {
 }
 
 // função para checkar o id e retornar o produto
-export const checkProductId = (id) =>
+export let checkProductId = (id) =>
   shoppingList.find((productId) => productId.id === id);
 
 //calcula o valor total dos produtos da lista
-export function calculateTotalPrice() {
-  let finalPriceList = 0;
-  shoppingList.forEach((item) => {
-    finalPriceList = item.price * item.quantity;
-  });
-  document.getElementById("finalPrice").innerHTML = "R$" + finalPriceList;
+let finalPriceList = 0; //armazena o valor total
+export function calculateTotalPrice(price) {
+  document.getElementById("finalPrice").innerHTML = "R$" + price;
+}
+export function addTotalPrice(id) {
+  let item = shoppingList.find((item) => item.id == id);
+  let price = item.totalPrice;
+  finalPriceList += price;
+  calculateTotalPrice(finalPriceList);
+}
+export function removeTotalPrice(id) {
+  let item = shoppingList.find((item) => item.id == id);
+  let price = item.totalPrice;
+  finalPriceList -= price;
+  calculateTotalPrice(finalPriceList);
 }
 
 //adciona valor e quantidade aos produtos
 export function btnAddQuantityAndPrice() {
   let inputPrice = document.getElementById("productPrice"); //pega o preço do produto do input
   let inputQuantity = document.getElementById("productQuantity"); //pega a quantidade do produto do input
-  const id = parseInt(document.getElementById("modalProductId").value);
+  let id = parseInt(document.getElementById("modalProductId").value);
   addQuantityAndPrice(id, inputPrice.value, inputQuantity.value);
   if (!inputPrice.value) {
     return window.alert("Insira o valor do produto desejado!");
@@ -46,4 +55,6 @@ function addQuantityAndPrice(id, price, quantity) {
   let produto = checkProductId(id);
   produto.addProductPrice(price);
   produto.addProductQuantity(quantity);
+  let total = price * quantity;
+  produto.addTotalPrice(total);
 }

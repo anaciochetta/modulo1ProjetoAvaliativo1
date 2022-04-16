@@ -2,7 +2,8 @@ import {
   addProductToShoppingList,
   checkProductId,
   calculateTotalPrice,
-  //verifyCheckbox,
+  addTotalPrice,
+  removeTotalPrice,
 } from "./shoppingList.js";
 import { shoppingList } from "./index.js";
 
@@ -12,12 +13,14 @@ export class Product {
   name = "";
   quantity = 0;
   price = 0;
+  totalPrice = 0;
 
-  constructor({ id, name, quantity, price }) {
+  constructor({ id, name, quantity, price, totalPrice }) {
     this.id = id;
     this.name = name;
     this.quantity = quantity;
     this.price = price;
+    this.totalPrice = totalPrice;
   }
 
   addProductName(item) {
@@ -30,6 +33,9 @@ export class Product {
 
   addProductQuantity(productQuantity) {
     this.quantity = productQuantity;
+  }
+  addTotalPrice(productTotalPrice) {
+    this.totalPrice = productTotalPrice;
   }
 }
 
@@ -47,8 +53,8 @@ export function btnAddProduct() {
 
 //cria um novo objeto referente ao produto inserido no input
 export function createObjectProduct() {
-  const id = Math.floor(Math.random() * 100); //cria o id
-  const item = new Product({ id: id });
+  let id = Math.floor(Math.random() * 100); //cria o id
+  let item = new Product({ id: id });
   addProductToShoppingList(item); //coloca o objeto do produto novo no array
   return id;
 }
@@ -80,20 +86,21 @@ export function createCheckboxProduct(produto, id) {
   checkbox.id = id;
   checkbox.name = produto;
   checkbox.checked = false;
-  checkbox.addEventListener("click", isChecked);
+  checkbox.addEventListener("change", isChecked);
 
   let label = document.createElement("label");
   label.htmlFor = produto;
   label.appendChild(document.createTextNode(produto));
   label.addEventListener("click", showModalProduct);
 
-  let br = document.createElement("br");
-
   let remove = document.createElement("input");
   remove.type = "button";
   remove.id = id;
   remove.name = produto;
-  remove.innerHTML = "remove";
+  remove.value = "X";
+  remove.addEventListener("click", removeProduct);
+
+  let br = document.createElement("br");
 
   ul.appendChild(li);
   li.appendChild(checkbox);
@@ -104,9 +111,9 @@ export function createCheckboxProduct(produto, id) {
 
 //função para aparecer o modal
 export function showModalProduct(e) {
-  const label = e.target;
-  const li = label.parentElement;
-  const id = li.id;
+  let label = e.target;
+  let li = label.parentElement;
+  let id = li.id;
   document.getElementById("modalProductId").value = id;
   document.getElementById("openModal").click();
 }
@@ -117,4 +124,39 @@ export function manageModalName(name) {
 }
 
 //função para verificar o checkbox
-export function isChecked() {}
+export function isChecked(event) {
+  let product = event.currentTarget;
+  console.log(product);
+  let element = product.parentElement;
+  console.log(element);
+  let id = element.id;
+  if (event.currentTarget.checked) {
+    addTotalPrice(id);
+  } else {
+    removeTotalPrice(id);
+  }
+}
+
+//função para remover o produto da lista
+export function removeProduct(product) {
+  let button = product.target;
+  let element = button.parentElement;
+  let id = element.id;
+  let updatedShopingList = removeProductShoppingList(shoppingList, id);
+  console.log(updatedShopingList);
+  product.target.parentElement.remove();
+  removeTotalPrice(id);
+  return updatedShopingList;
+}
+
+//função para remover o produto do array
+export function removeProductShoppingList(arr, product) {
+  return arr.filter(function (ele) {
+    return ele.id != product;
+  });
+}
+
+export function updateArray() {
+  shoppingList.push(...updatedShopingList);
+  console.log(shoppingList);
+}
