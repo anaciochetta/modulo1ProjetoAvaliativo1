@@ -34,6 +34,7 @@ export function removeTotalPrice(id) {
   let price = item.totalPrice;
   finalPriceList -= price;
   calculateTotalPrice(finalPriceList);
+  price = 0;
 }
 
 //adciona valor e quantidade aos produtos
@@ -57,4 +58,5 @@ function addQuantityAndPrice(id, price, quantity) {
   produto.addProductQuantity(quantity);
   let total = price * quantity;
   produto.addTotalPrice(total);
+  addTotalPrice(id);
 }

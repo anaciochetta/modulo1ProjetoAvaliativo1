@@ -12,6 +12,7 @@ import {
   checkProductId,
   calculateTotalPrice,
   btnAddQuantityAndPrice,
+  addTotalPrice,
 } from "./shoppingList.js";
 
 //armazena os produtos da lista de compras

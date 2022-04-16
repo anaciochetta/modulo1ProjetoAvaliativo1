@@ -47,7 +47,6 @@ export function btnAddProduct() {
   let id = createObjectProduct();
   createCheckboxProduct(inputProduct.value, id);
   addInstanceToProducts(id, inputProduct.value);
-  manageModalName(inputProduct.value);
   inputProduct.value = "";
 }
 
@@ -91,7 +90,6 @@ export function createCheckboxProduct(produto, id) {
   let label = document.createElement("label");
   label.htmlFor = produto;
   label.appendChild(document.createTextNode(produto));
-  label.addEventListener("click", showModalProduct);
 
   let remove = document.createElement("input");
   remove.type = "button";
@@ -111,10 +109,7 @@ export function createCheckboxProduct(produto, id) {
 
 //função para aparecer o modal
 export function showModalProduct(e) {
-  let label = e.target;
-  let li = label.parentElement;
-  let id = li.id;
-  document.getElementById("modalProductId").value = id;
+  document.getElementById("modalProductId").value = e;
   document.getElementById("openModal").click();
 }
 
@@ -126,12 +121,11 @@ export function manageModalName(name) {
 //função para verificar o checkbox
 export function isChecked(event) {
   let product = event.currentTarget;
-  console.log(product);
-  let element = product.parentElement;
-  console.log(element);
-  let id = element.id;
+  let id = product.id;
+  let name = product.name;
+  manageModalName(name);
   if (event.currentTarget.checked) {
-    addTotalPrice(id);
+    showModalProduct(id);
   } else {
     removeTotalPrice(id);
   }
