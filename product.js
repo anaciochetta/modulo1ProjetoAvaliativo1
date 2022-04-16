@@ -2,10 +2,9 @@ import {
   addProductToShoppingList,
   checkProductId,
   calculateTotalPrice,
-  addTotalPrice,
-  removeTotalPrice,
+  shoppingList,
+  setShoppingList,
 } from "./shoppingList.js";
-import { shoppingList } from "./index.js";
 
 //cria os produtos individuais com nome e preço
 export class Product {
@@ -13,14 +12,14 @@ export class Product {
   name = "";
   quantity = 0;
   price = 0;
-  totalPrice = 0;
+  checked = false;
 
-  constructor({ id, name, quantity, price, totalPrice }) {
+  constructor({ id, name, quantity, price, checked }) {
     this.id = id;
     this.name = name;
     this.quantity = quantity;
     this.price = price;
-    this.totalPrice = totalPrice;
+    this.checked = checked;
   }
 
   addProductName(item) {
@@ -34,8 +33,14 @@ export class Product {
   addProductQuantity(productQuantity) {
     this.quantity = productQuantity;
   }
-  addTotalPrice(productTotalPrice) {
-    this.totalPrice = productTotalPrice;
+  addChecked(productChecked) {
+    this.checked = productChecked;
+  }
+  getTotalPrice() {
+    if (!this.checked || !this.price || !this.quantity) {
+      return 0;
+    }
+    return this.price * this.quantity;
   }
 }
 
@@ -55,6 +60,7 @@ export function createObjectProduct() {
   let id = Math.floor(Math.random() * 100); //cria o id
   let item = new Product({ id: id });
   addProductToShoppingList(item); //coloca o objeto do produto novo no array
+  console.log(shoppingList);
   return id;
 }
 
@@ -103,8 +109,8 @@ export function createCheckboxProduct(produto, id) {
   ul.appendChild(li);
   li.appendChild(checkbox);
   li.appendChild(label);
-  li.appendChild(br);
   li.appendChild(remove);
+  li.appendChild(br);
 }
 
 //função para aparecer o modal
@@ -122,13 +128,18 @@ export function manageModalName(name) {
 export function isChecked(event) {
   let product = event.currentTarget;
   let id = product.id;
+
   let name = product.name;
   manageModalName(name);
   if (event.currentTarget.checked) {
     showModalProduct(id);
-  } else {
-    removeTotalPrice(id);
   }
+  let item = checkProductId(+id);
+  console.log(item);
+  console.log(id);
+  item.addChecked(event.currentTarget.checked);
+
+  calculateTotalPrice();
 }
 
 //função para remover o produto da lista
@@ -137,9 +148,9 @@ export function removeProduct(product) {
   let element = button.parentElement;
   let id = element.id;
   let updatedShopingList = removeProductShoppingList(shoppingList, id);
-  console.log(updatedShopingList);
+  setShoppingList(updatedShopingList);
   product.target.parentElement.remove();
-  removeTotalPrice(id);
+  calculateTotalPrice();
   return updatedShopingList;
 }
 

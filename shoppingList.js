@@ -1,13 +1,8 @@
-import {
-  Product,
-  btnAddProduct,
-  createObjectProduct,
-  ajustProductName,
-  createCheckboxProduct,
-  addInstanceToProducts,
-  showModalProduct,
-} from "./product.js";
-import { shoppingList } from "./index.js";
+export let shoppingList = [];
+
+export function setShoppingList(_shoppingList) {
+  shoppingList = _shoppingList;
+}
 
 //adciona os produtos para a lista de compras
 export function addProductToShoppingList(item) {
@@ -19,22 +14,15 @@ export let checkProductId = (id) =>
   shoppingList.find((productId) => productId.id === id);
 
 //calcula o valor total dos produtos da lista
-let finalPriceList = 0; //armazena o valor total
-export function calculateTotalPrice(price) {
+export function renderTotalPrice(price) {
   document.getElementById("finalPrice").innerHTML = "R$" + price;
 }
-export function addTotalPrice(id) {
-  let item = shoppingList.find((item) => item.id == id);
-  let price = item.totalPrice;
-  finalPriceList += price;
-  calculateTotalPrice(finalPriceList);
-}
-export function removeTotalPrice(id) {
-  let item = shoppingList.find((item) => item.id == id);
-  let price = item.totalPrice;
-  finalPriceList -= price;
-  calculateTotalPrice(finalPriceList);
-  price = 0;
+export function calculateTotalPrice() {
+  let totalPrice = 0;
+  shoppingList.forEach((product) => {
+    totalPrice += product.getTotalPrice();
+  });
+  renderTotalPrice(totalPrice);
 }
 
 //adciona valor e quantidade aos produtos
@@ -56,7 +44,5 @@ function addQuantityAndPrice(id, price, quantity) {
   let produto = checkProductId(id);
   produto.addProductPrice(price);
   produto.addProductQuantity(quantity);
-  let total = price * quantity;
-  produto.addTotalPrice(total);
-  addTotalPrice(id);
+  calculateTotalPrice();
 }

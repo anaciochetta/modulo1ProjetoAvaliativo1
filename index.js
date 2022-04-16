@@ -12,11 +12,9 @@ import {
   checkProductId,
   calculateTotalPrice,
   btnAddQuantityAndPrice,
-  addTotalPrice,
 } from "./shoppingList.js";
 
 //armazena os produtos da lista de compras
-export let shoppingList = [];
 
 //botão para adcionar nome do item da lista
 let btnAddName = document
