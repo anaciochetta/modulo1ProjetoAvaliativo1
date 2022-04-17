@@ -1,9 +1,10 @@
 import {
   addProductToShoppingList,
-  checkProductId,
   calculateTotalPrice,
   shoppingList,
   setShoppingList,
+  createCheckboxProduct,
+  removeProductShoppingList,
 } from "./shoppingList.js";
 
 //cria os produtos individuais com nome e preço
@@ -64,82 +65,14 @@ export function createObjectProduct() {
   return id;
 }
 
+// função para checkar o id e retornar o produto
+export let checkProductId = (id) =>
+  shoppingList.find((productId) => productId.id === id);
+
 //função para colocar o nome no produto novo
 export function addInstanceToProducts(id, name) {
   let produto = checkProductId(id);
   produto.addProductName(name);
-}
-
-//função para deixar o nome sem acento e tudo minusculo
-export function ajustProductName(item) {
-  const parsed = item
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-
-  return parsed;
-}
-
-//função para criar um li que contenha um checkbox
-export function createCheckboxProduct(produto, id) {
-  let ul = document.getElementById("listOfProducts");
-  let li = document.createElement("li");
-  li.id = id;
-
-  let checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.id = id;
-  checkbox.name = produto;
-  checkbox.checked = false;
-  checkbox.addEventListener("change", isChecked);
-
-  let label = document.createElement("label");
-  label.htmlFor = produto;
-  label.appendChild(document.createTextNode(produto));
-
-  let remove = document.createElement("input");
-  remove.type = "button";
-  remove.id = id;
-  remove.name = produto;
-  remove.value = "X";
-  remove.addEventListener("click", removeProduct);
-
-  let br = document.createElement("br");
-
-  ul.appendChild(li);
-  li.appendChild(checkbox);
-  li.appendChild(label);
-  li.appendChild(remove);
-  li.appendChild(br);
-}
-
-//função para aparecer o modal
-export function showModalProduct(e) {
-  document.getElementById("modalProductId").value = e;
-  document.getElementById("openModal").click();
-}
-
-//função para gerenciar o modal
-export function manageModalName(name) {
-  document.getElementById("productModalName").innerHTML = name;
-}
-
-//função para verificar o checkbox
-export function isChecked(event) {
-  let product = event.currentTarget;
-  let id = product.id;
-
-  let name = product.name;
-  manageModalName(name);
-  if (event.currentTarget.checked) {
-    showModalProduct(id);
-  }
-  let item = checkProductId(+id);
-  console.log(item);
-  console.log(id);
-  item.addChecked(event.currentTarget.checked);
-
-  calculateTotalPrice();
 }
 
 //função para remover o produto da lista
@@ -152,16 +85,4 @@ export function removeProduct(product) {
   product.target.parentElement.remove();
   calculateTotalPrice();
   return updatedShopingList;
-}
-
-//função para remover o produto do array
-export function removeProductShoppingList(arr, product) {
-  return arr.filter(function (ele) {
-    return ele.id != product;
-  });
-}
-
-export function updateArray() {
-  shoppingList.push(...updatedShopingList);
-  console.log(shoppingList);
 }

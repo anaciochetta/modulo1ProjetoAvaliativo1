@@ -1,20 +1,5 @@
-import {
-  Product,
-  btnAddProduct,
-  createObjectProduct,
-  ajustProductName,
-  addInstanceToProducts,
-  createCheckboxProduct,
-  showModalProduct,
-} from "./product.js";
-import {
-  addProductToShoppingList,
-  checkProductId,
-  calculateTotalPrice,
-  btnAddQuantityAndPrice,
-} from "./shoppingList.js";
-
-//armazena os produtos da lista de compras
+import { btnAddProduct } from "./product.js";
+import { btnAddQuantityAndPrice } from "./shoppingList.js";
 
 //botão para adcionar nome do item da lista
 let btnAddName = document
