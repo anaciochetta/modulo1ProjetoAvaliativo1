@@ -1,7 +1,8 @@
-import { removeProduct, checkProductId } from "./product.js";
+import { removeProduct, checkProductId, Product } from "./product.js";
 //array para armazenar
 export let shoppingList = [];
 
+//função para poder alterar a ShoppingList pois estava dando erro
 export function setShoppingList(_shoppingList) {
   shoppingList = _shoppingList;
 }
@@ -47,32 +48,34 @@ function addQuantityAndPrice(id, price, quantity) {
   produto.addProductPrice(price);
   produto.addProductQuantity(quantity);
   calculateTotalPrice();
-  //renderLabel(id);
+  saveShoppingList();
 }
 
 //função para criar um li que contenha um checkbox e um botão de remover
-export function createCheckboxProduct(produto, id) {
+export function createCheckboxProduct(name, id, checked) {
   let ul = document.getElementById("listOfProducts");
   let li = document.createElement("li");
   li.id = id;
+  li.class = "list-group-item";
 
   let checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = id;
-  checkbox.name = produto;
-  checkbox.checked = false;
+  checkbox.name = name;
+  checkbox.checked = checked;
+  checkbox.class = "form-check-input";
   checkbox.addEventListener("change", isChecked);
 
   let label = document.createElement("label");
-  label.htmlFor = produto;
+  label.htmlFor = name;
   label.id = `label${id}`;
-  label.appendChild(document.createTextNode(produto));
+  label.appendChild(document.createTextNode(name));
 
   let remove = document.createElement("input");
   remove.type = "button";
-  remove.id = id;
-  remove.name = produto;
-  remove.value = "X";
+  remove.id = "removeButton";
+  remove.name = name;
+  remove.value = "x";
   remove.addEventListener("click", removeProduct);
 
   let br = document.createElement("br");
@@ -107,10 +110,9 @@ export function isChecked(event) {
     showModalProduct(id);
   }
   let item = checkProductId(+id);
-  console.log(item);
-  console.log(id);
   item.addChecked(event.currentTarget.checked);
   calculateTotalPrice();
+  saveShoppingList();
 }
 
 //função para aparecer o modal na tela
@@ -131,7 +133,37 @@ export function removeProductShoppingList(arr, product) {
   });
 }
 
+//função para dar um update no array principal
 export function updateArray() {
   shoppingList.push(...updatedShopingList);
-  console.log(shoppingList);
+}
+
+export function saveShoppingList() {
+  localStorage.setItem("itens", JSON.stringify(shoppingList));
+}
+
+//função para renderizar a lista novamente na tela
+setTimeout(() => {
+  renderShoppingList();
+}, 150); //para arrrumar o erro de inicialização do Product
+export function renderShoppingList() {
+  let savedList = JSON.parse(localStorage.getItem("itens"));
+  if (savedList) {
+    savedList.forEach((savedProduct) => {
+      let item = new Product({
+        id: savedProduct.id,
+        name: savedProduct.name,
+        quantity: savedProduct.quantity,
+        price: savedProduct.price,
+        checked: savedProduct.checked,
+      });
+      addProductToShoppingList(item);
+      createCheckboxProduct(
+        savedProduct.name,
+        savedProduct.id,
+        savedProduct.checked
+      );
+    });
+    calculateTotalPrice();
+  }
 }

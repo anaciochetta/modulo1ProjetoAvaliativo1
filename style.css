@@ -1,20 +1,73 @@
-body{
-    font-family: Georgia, serif;
-    background: #EEEEEE;
+body {
+  font-family: Georgia, serif;
+  background: #bdd2b6;
 }
-header{
-    margin: auto;
-    text-align: center;
+header {
+  font-family: Georgia, serif;
+  margin: auto;
+  text-align: center;
 }
-main{
-    background-color: #DDDDDD;
-    margin: auto;   /* centralizar o conteúdo */
-    width: 800px; /* trocar depois */
+main {
+  font-family: Georgia, serif;
+  background-color: #fff9f4;
+  border-color: #f8ede3;
 }
 .insertProductsNames {
-    display: flex;
-    justify-content: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.totalPriceProducts{
-    text-align: center;
+.totalPriceProducts {
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: medium;
+}
+#listOfProducts {
+  font-size: larger;
+  list-style-type: none;
+  padding: auto;
+}
+.list-group-item {
+  padding: 8px 16px;
+  font-size: large;
+}
+#checkbox {
+  margin: 4px 4px 0px 0px;
+}
+#removeButton {
+  display: inline-block;
+  font-size: xx-small;
+  border-radius: 50%;
+  color: white;
+  background-color: red;
+  border-width: 0px;
+}
+label {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.navbar-brand {
+  font-size: larger;
+  display: inline-block;
+  color: black;
+  background-color: #798777;
+}
+#btnAdd {
+  color: white;
+  background-color: #a2b29f;
+  border-color: #a2b29f;
+}
+#btnSave {
+  background-color: #a2b29f;
+  border-color: #a2b29f;
+}
+#productName {
+  text-align: center;
+}
+.navbar {
+  background-color: #798777;
 }

@@ -5,6 +5,7 @@ import {
   setShoppingList,
   createCheckboxProduct,
   removeProductShoppingList,
+  saveShoppingList,
 } from "./shoppingList.js";
 
 //cria os produtos individuais com nome e preço
@@ -45,27 +46,29 @@ export class Product {
   }
 }
 
+//botão para adcionar o produto
 export function btnAddProduct() {
   let inputProduct = document.getElementById("productName"); //pega o nome do produto do input
   if (!inputProduct.value) {
     return window.alert("Insira um valor!");
   }
   let id = createObjectProduct();
-  createCheckboxProduct(inputProduct.value, id);
+  createCheckboxProduct(inputProduct.value, id, false);
   addInstanceToProducts(id, inputProduct.value);
   inputProduct.value = "";
+  saveShoppingList();
 }
 
-//cria um novo objeto referente ao produto inserido no input
+//função para criar um novo objeto referente ao produto inserido no input
 export function createObjectProduct() {
-  let id = Math.floor(Math.random() * 100); //cria o id
+  let id = Math.floor(Math.random() * 1000); //cria o id
   let item = new Product({ id: id });
   addProductToShoppingList(item); //coloca o objeto do produto novo no array
-  console.log(shoppingList);
+  saveShoppingList();
   return id;
 }
 
-// função para checkar o id e retornar o produto
+//função para checkar o id e retornar o produto
 export let checkProductId = (id) =>
   shoppingList.find((productId) => productId.id === id);
 
@@ -84,5 +87,6 @@ export function removeProduct(product) {
   setShoppingList(updatedShopingList);
   product.target.parentElement.remove();
   calculateTotalPrice();
+  saveShoppingList();
   return updatedShopingList;
 }

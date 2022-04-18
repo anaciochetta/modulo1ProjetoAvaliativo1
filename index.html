@@ -21,31 +21,56 @@
       crossorigin="anonymous"
     ></script>
     <header>
-      <h1>DEVinHouse</h1>
-      <h2>Módulo 1 - Projeto Avaliativo 1</h2>
+      <div class="navbar sticky-top" id="navbar">
+        <div class="container-fluid">
+          <a id="nav" class="navbar-brand d-flex align-items-center">
+            <a class="navbar-brand" href="#">
+              <img src="carrinhos-de-compras.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+              Lista de compras DEVinHouse
+            </a>
+        </div>
+      </div>
     </header>
     <main>
-      <div class="insertProductsNames">
-        <label for="productName">Inserir item na lista: </label>
-        <input
-          type="text"
-          id="productName"
-          placeholder="ex: Brócolis"
-          autofocus
-        />
-        <button id="btnAdd" class="btn btn-primary">Inserir</button>
+      <div class="container py-4">
+        <div class="insertProductsNames">
+          <h2>Inserir item na lista:</h2>
+          <p>
+            <input
+              type="text"
+              id="productName"
+              placeholder="ex: Brócolis"
+              autofocus
+            />
+          </p>
+          <p>
+            <button id="btnAdd" class="btn btn-primary">Inserir</button>
+          </p>
+        </div>
       </div>
 
-      <p id="test"></p>
-
-      <div class="shoppingCartList">
-        <ul id="listOfProducts"></ul>
+      <div class="container py-4" id="bodyShoppingList">
+        <div class="p-4 p-md-5 mb-4 border rounded-3">
+          <div class="shoppingCartList">
+            <ul id="listOfProducts"></ul>
+          </div>
+        </div>
       </div>
 
-      <div class="totalPriceProducts">
-        <p>Total das compras:</p>
-        <p id="finalPrice"></p>
+      <div class="container py-4">
+        <div class="p-4 p-md-5 mb-4 border rounded-3">
+          <div class="totalPriceProducts">
+            <p>Total das compras:</p>
+            <p id="finalPrice"></p>
+          </div>
+        </div>
+        <footer class="footer">
+          <div class="container">
+            <span class="text-muted">Feito por Ana Ciochetta.</span>
+          </div>
+        </footer>
       </div>
+
     </main>
 
     <!-- Button trigger modal -->
